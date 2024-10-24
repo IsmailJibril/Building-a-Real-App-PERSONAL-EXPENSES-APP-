@@ -51,7 +51,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _userTransaction = [
     // Transaction(
     //   id: 't1',
@@ -66,6 +66,29 @@ class _MyHomePageState extends State<MyHomePage> {
     //   date: DateTime.now(),
     // ),
   ];
+
+  @override
+  initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  // @override
+  // void didChangeAppLifeCycleState(AppLifecycleState state) {
+  //   print(state);
+  //   super.didChangeAppLifecycleState(state);
+  // }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
+  dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   List<Transaction> get _recentTransaction {
     return _userTransaction.where((tx) {
